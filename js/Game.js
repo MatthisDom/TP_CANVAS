@@ -3,6 +3,7 @@ import Obstacle from "./Obstacle.js";
 import ObjetSouris from "./ObjetSouris.js";
 import { rectsOverlap } from "./collisions.js";
 import { initListeners } from "./ecouteurs.js";
+import ExitPortal from "./ExitPortal.js";
 export default class Game {
     objetsGraphiques = [];
 
@@ -27,13 +28,15 @@ export default class Game {
 
 
         // On cree deux obstacles
-        let obstacle1 = new Obstacle(300, 0, 40, 600, "red");
+        let obstacle1 = new Obstacle(300, 0, 40, 100, "red");
         this.objetsGraphiques.push(obstacle1);
         let obstacle2 = new Obstacle(500, 500, 100, 100, "blue");
         this.objetsGraphiques.push(obstacle2);
 
         // On ajoute la sortie
         // TODO
+        let exit_portal = new ExitPortal(700, 100, 100, 100, "white");
+        this.objetsGraphiques.push(exit_portal);
 
         // On initialise les écouteurs de touches, souris, etc.
         initListeners(this.inputStates, this.canvas);
@@ -53,7 +56,6 @@ export default class Game {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // 2 - on dessine les objets à animer dans le jeu
-        // ici on dessine le monstre
         this.drawAllObjects();
 
         // 3 - On regarde l'état du clavier, manette, souris et on met à jour
@@ -95,18 +97,18 @@ export default class Game {
         this.player.vitesseY = 0;
         
         if(this.inputStates.ArrowRight) {
-            this.player.vitesseX = 3;
+            this.player.vitesseX = 5;
         } 
         if(this.inputStates.ArrowLeft) {
-            this.player.vitesseX = -3;
+            this.player.vitesseX = -5;
         } 
 
         if(this.inputStates.ArrowUp) {
-            this.player.vitesseY = -3;
+            this.player.vitesseY = -5;
         } 
 
         if(this.inputStates.ArrowDown) {
-            this.player.vitesseY = 3;
+            this.player.vitesseY = 5;
         } 
 
         this.player.move();
@@ -117,10 +119,8 @@ export default class Game {
     testCollisionsPlayer() {
         // Teste collision avec les bords du canvas
         this.testCollisionPlayerBordsEcran();
-
-        // Teste collision avec les obstacles
         this.testCollisionPlayerObstacles();
-       
+        this.testCollisionPlayerExit();
     }
 
     testCollisionPlayerBordsEcran() {
@@ -151,21 +151,24 @@ export default class Game {
 
     testCollisionPlayerObstacles() {
         this.objetsGraphiques.forEach(obj => {
-            if(obj instanceof Obstacle) {
-                if(rectsOverlap(this.player.x-this.player.w/2, this.player.y - this.player.h/2, this.player.w, this.player.h, obj.x, obj.y, obj.w, obj.h)) {
-                    // collision
+            if (obj instanceof Obstacle) {
+                if (rectsOverlap(this.player.x - this.player.w / 2, this.player.y - this.player.h / 2, this.player.w, this.player.h, obj.x, obj.y, obj.w, obj.h)) {
+                    // Determine the side of collision and adjust player's position
+                    if (this.player.x < obj.x) {
+                        // Collision on the left side
+                        this.player.x = obj.x - this.player.w / 2;
+                    } else if (this.player.x > obj.x + obj.w) {
+                        // Collision on the right side
+                        this.player.x = obj.x + obj.w + this.player.w / 2;
+                    } else if (this.player.y < obj.y) {
+                        // Collision on the top side
+                        this.player.y = obj.y - this.player.h / 2;
+                    } else if (this.player.y > obj.y + obj.h) {
+                        // Collision on the bottom side
+                        this.player.y = obj.y + obj.h + this.player.h / 2;
+                    }
 
-                    // ICI TEST BASIQUE QUI ARRETE LE JOUEUR EN CAS DE COLLIION.
-                    // SI ON VOULAIT FAIRE MIEUX, ON POURRAIT PAR EXEMPLE REGARDER OU EST LE JOUEUR
-                    // PAR RAPPORT A L'obstacle courant : il est à droite si son x est plus grand que le x de l'obstacle + la largeur de l'obstacle
-                    // il est à gauche si son x + sa largeur est plus petit que le x de l'obstacle
-                    // etc.
-                    // Dans ce cas on pourrait savoir comment le joueur est entré en collision avec l'obstacle et réagir en conséquence
-                    // par exemple en le repoussant dans la direction opposée à celle de l'obstacle...
-                    // Là par défaut on le renvoie en x=10 y=10 et on l'arrête
-                    console.log("Collision avec obstacle");
-                    this.player.x = 10;
-                    this.player.y = 10;
+                    // Stop the player's movement
                     this.player.vitesseX = 0;
                     this.player.vitesseY = 0;
                 }
@@ -173,4 +176,22 @@ export default class Game {
         });
     }
 
+    testCollisionPlayerExit() {
+        this.objetsGraphiques.forEach(obj => {
+            if (obj instanceof ExitPortal) {
+                if (rectsOverlap(this.player.x - this.player.w / 2, this.player.y - this.player.h / 2, this.player.w, this.player.h, obj.x, obj.y, obj.w, obj.h)) {
+                    alert("GG tu as atteint la fin");
+                    this.player.x = 10;
+                    this.player.y = 10;
+                    this.player.vitesseX = 0;
+                    this.player.vitesseY = 0;
+
+                    this.inputStates.ArrowRight = false;
+                    this.inputStates.ArrowLeft = false;
+                    this.inputStates.ArrowUp = false;
+                    this.inputStates.ArrowDown = false;
+                }
+            }
+        });
+    }
 }
