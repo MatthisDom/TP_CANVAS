@@ -36,6 +36,14 @@ header
     background-image: url("../assets/images/coeur_plein.png");
     background-size: contain;
 }
+
+.heart-empty {
+    height: 50px;
+    width: 50px;
+    background-image: url("../assets/images/coeur_vide.png");
+    background-size: contain;
+}
+
 main
 {
     display: flex;

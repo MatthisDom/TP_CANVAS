@@ -10,17 +10,15 @@ export default class Player extends ObjectGraphique {
         this.angle = 0;
         this.sprite = new Image();
         this.sprite.src = '/assets/images/sprite.png';
+        this.life = 3;
     }
 
     draw(ctx) {
-        // Ici on dessine un monstre
         ctx.save();
 
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
         ctx.translate(-this.w / 2, -this.h / 2);
-
-        // Draw the sprite
         ctx.drawImage(this.sprite, 0, 0, this.w, this.h);
         ctx.restore();
 

@@ -5,14 +5,14 @@ export default class ObjectGraphique {
         this.w = w;
         this.h = h;
         if(couleur !== undefined) {
-            this.couleur = couleur;
+            this.couleur = "#320082";
         }
     }
 
     draw(ctx) {
-        // pour debug,juste une croix en 0, 0
+        // pour debug, juste une croix en 0, 0
         ctx.save();
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "#320082"; // use the blue color from the CSS
         ctx.beginPath();
         ctx.moveTo(-10, 0);
         ctx.lineTo(10, 0);
