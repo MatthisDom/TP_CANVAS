@@ -147,7 +147,7 @@ export default class Game {
                 exit_portal = new ExitPortal(700, 100, 100, 100, "white");
                 this.objetsGraphiques.push(exit_portal);
                 let obstacleAnime1 = new ObstacleAnime(200, 100, 40, 40, "red", 500, 500, 1);
-                let obstacleAnime2 = new ObstacleAnime(getRandomInt(120, 500), getRandomInt(200,500), 40, 40, "blue", 0, 500, getRandomInt(1,10));
+                let obstacleAnime2 = new ObstacleAnime(getRandomInt(170, 500), getRandomInt(200,500), 40, 40, "blue", 0, 500, getRandomInt(1,10));
                 let obstacleAnime3 = new ObstacleAnime(getRandomInt(400,800), getRandomInt(400,400), 50, 50,"yellow",500,500,getRandomInt(1,4))
                 this.objetsGraphiques.push(obstacleAnime1, obstacleAnime2, obstacleAnime3);
 
