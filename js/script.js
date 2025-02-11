@@ -1,14 +1,18 @@
 import Game from "./Game.js";
+import { loadImage } from "./loadAssets.js";
 
 // Bonne pratique : avoir une fonction appelée une fois
 // que la page est prête, que le DOM est chargé, etc.
 window.onload = init;
 
 async function init() {
-   // On recupère le canvas
-   let canvas = document.querySelector("#myCanvas");
+    // On recupère le canvas
+    let canvas = document.querySelector("#myCanvas");
 
-   // On cree une instance du jeu
+    // Charger les assets avant d'initialiser le jeu
+    await loadAssets();
+
+    // On cree une instance du jeu
     let game = new Game(canvas);
     // ici on utilise await car la méthode init est asynchrone
     // typiquement dans init on charge des images, des sons, etc.
@@ -16,5 +20,16 @@ async function init() {
 
     // on peut démarrer le jeu
     game.start();
+}
+
+async function loadAssets()
+{
+    await loadImage('../assets/images/coeur_plein.png');
+    await loadImage('../assets/images/coeur_vide.png');
+    await loadImage('../assets/images/exit.gif')
+    await loadImage('../assets/images/meteor.png');
+    await loadImage('../assets/images/mur.png');
+    await loadImage('../assets/images/sprite.png');
+
 }
 
