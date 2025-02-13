@@ -8,7 +8,7 @@ export default class ObjetSouris extends ObjectGraphique {
     draw(ctx) {
         ctx.save();
         ctx.fillStyle = this.couleur;
-        ctx.lineWidth = 2; // Set the line width to make it thicker
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(this.x + this.w / 2, this.y);
         ctx.lineTo(this.x + this.w / 2, this.y + this.h);

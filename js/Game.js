@@ -40,7 +40,7 @@ export default class Game {
     }
 
     mainAnimationLoop(currentTime) {
-        let delta = (currentTime - this.previousTime) /100; // Convert to seconds
+        let delta = (currentTime - this.previousTime) /100; 
         this.previousTime = currentTime;
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -162,24 +162,24 @@ export default class Game {
         
         if(this.inputStates.ArrowRight)
         {
-            this.player.vitesseX = 40 * delta;
+            this.player.vitesseX = 1;
         } 
         if(this.inputStates.ArrowLeft)
         {
-            this.player.vitesseX = -40 * delta;
+            this.player.vitesseX = -1;
         } 
 
         if(this.inputStates.ArrowUp) 
         {
-            this.player.vitesseY = -40 * delta;
+            this.player.vitesseY = -1;
         } 
 
         if(this.inputStates.ArrowDown)
         {
-            this.player.vitesseY = 40 * delta;
+            this.player.vitesseY = 1;
         } 
 
-        this.player.move();
+        this.player.move(delta);
 
         this.bounceOffEdges(this.player);
         this.testCollisionsPlayer();
