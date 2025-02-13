@@ -286,8 +286,8 @@ export default class Game {
                     }
 
                     // Stop the player's movement
-                    this.player.x = 10;
-                    this.player.y = 10;
+                    this.player.x = 150;
+                    this.player.y = 100;
                     this.player.vitesseX = 0;
                     this.player.vitesseY = 0;
                     this.player.life -= 1;
