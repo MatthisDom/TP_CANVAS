@@ -6,8 +6,8 @@ export default class ObstacleAnime extends ObjectGraphique {
         this.destinationX = destinationX;
         this.destinationY = destinationY;
         this.speed = speed;
-        this.vitesseX = speed * 10;
-        this.vitesseY = speed * 10;
+        this.vitesseX = speed * 2;
+        this.vitesseY = speed * 2;
         this.sprite = new Image();
         this.sprite.src = '/assets/images/meteor.png';
         this.sprite.onload = () => {
