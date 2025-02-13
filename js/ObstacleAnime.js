@@ -6,8 +6,8 @@ export default class ObstacleAnime extends ObjectGraphique {
         this.destinationX = destinationX;
         this.destinationY = destinationY;
         this.speed = speed;
-        this.vitesseX = speed;
-        this.vitesseY = speed;
+        this.vitesseX = speed * 10;
+        this.vitesseY = speed * 10;
         this.sprite = new Image();
         this.sprite.src = '/assets/images/meteor.png';
         this.sprite.onload = () => {
@@ -22,8 +22,8 @@ export default class ObstacleAnime extends ObjectGraphique {
         ctx.restore();
     }
 
-    move() {
-        this.x += this.vitesseX;
-        this.y += this.vitesseY;
+    move(delta) {
+        this.x += this.vitesseX * delta;
+        this.y += this.vitesseY * delta;
     }
 }

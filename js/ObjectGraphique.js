@@ -12,7 +12,7 @@ export default class ObjectGraphique {
     draw(ctx) {
         // pour debug, juste une croix en 0, 0
         ctx.save();
-        ctx.strokeStyle = "#320082"; // use the blue color from the CSS
+        ctx.strokeStyle = "#320082"; 
         ctx.beginPath();
         ctx.moveTo(-10, 0);
         ctx.lineTo(10, 0);
