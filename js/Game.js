@@ -26,7 +26,7 @@ export default class Game {
         this.objetsGraphiques.push(this.player);
         this.level = 0;
         // Un objert qui suite la souris, juste pour tester
-
+        
         this.nextLevel(this.level)
         initListeners(this.inputStates, this.canvas);
 
@@ -35,24 +35,18 @@ export default class Game {
 
     start() {
         console.log("Game démarré");
-
-        // On démarre une animation à 60 images par seconde
+        this.previousTime = performance.now();
         requestAnimationFrame(this.mainAnimationLoop.bind(this));
     }
 
-    mainAnimationLoop() {
-        // 1 - on efface le canvas
+    mainAnimationLoop(currentTime) {
+        let delta = (currentTime - this.previousTime) /100; // Convert to seconds
+        this.previousTime = currentTime;
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // 2 - on dessine les objets à animer dans le jeu
         this.drawAllObjects();
+        this.update(delta);
 
-        // 3 - On regarde l'état du clavier, manette, souris et on met à jour
-        // l'état des objets du jeu en conséquence
-        this.update();
-
-        // 4 - on demande au navigateur d'appeler la fonction mainAnimationLoop
-        // à nouveau dans 1/60 de seconde
         requestAnimationFrame(this.mainAnimationLoop.bind(this));
     }
 
@@ -63,12 +57,12 @@ export default class Game {
         });
     }
 
-    update() {
+    update(delta) {
         // Appelée par mainAnimationLoop
         // donc tous les 1/60 de seconde
         
         // Déplacement du joueur. 
-        this.movePlayer();
+        this.movePlayer(delta);
 
         // on met à jour la position de objetSouris avec la position de la souris
         this.objetSouris.x = this.inputStates.mouseX;
@@ -80,7 +74,7 @@ export default class Game {
         // Update the position of moving obstacles and make them bounce
         this.objetsGraphiques.forEach(obj => {
             if (obj instanceof ObstacleAnime) {
-                obj.move();
+                obj.move(delta);
                 this.bounceOffEdges(obj);
             }
         });
@@ -161,23 +155,28 @@ export default class Game {
 
     }
 
-    movePlayer() {
+    movePlayer(delta)
+    {
         this.player.vitesseX = 0;
         this.player.vitesseY = 0;
         
-        if(this.inputStates.ArrowRight) {
-            this.player.vitesseX = 5;
+        if(this.inputStates.ArrowRight)
+        {
+            this.player.vitesseX = 40 * delta;
         } 
-        if(this.inputStates.ArrowLeft) {
-            this.player.vitesseX = -5;
-        } 
-
-        if(this.inputStates.ArrowUp) {
-            this.player.vitesseY = -5;
+        if(this.inputStates.ArrowLeft)
+        {
+            this.player.vitesseX = -40 * delta;
         } 
 
-        if(this.inputStates.ArrowDown) {
-            this.player.vitesseY = 5;
+        if(this.inputStates.ArrowUp) 
+        {
+            this.player.vitesseY = -40 * delta;
+        } 
+
+        if(this.inputStates.ArrowDown)
+        {
+            this.player.vitesseY = 40 * delta;
         } 
 
         this.player.move();

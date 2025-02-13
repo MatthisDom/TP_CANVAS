@@ -1,6 +1,5 @@
 import Game from "./Game.js";
-import { loadImage } from "./loadAssets.js";
-
+import { loadAssets } from "./utils.js";
 // Bonne pratique : avoir une fonction appelée une fois
 // que la page est prête, que le DOM est chargé, etc.
 window.onload = init;
@@ -22,14 +21,4 @@ async function init() {
     game.start();
 }
 
-async function loadAssets()
-{
-    await loadImage('../assets/images/coeur_plein.png');
-    await loadImage('../assets/images/coeur_vide.png');
-    await loadImage('../assets/images/exit.gif')
-    await loadImage('../assets/images/meteor.png');
-    await loadImage('../assets/images/mur.png');
-    await loadImage('../assets/images/sprite.png');
-
-}
 

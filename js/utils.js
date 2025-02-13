@@ -1,3 +1,4 @@
+import { loadImage } from './loadAssets.js'; 
 function drawCircleImmediat(ctx, x, y, r, color) {
     // BONNE PRATIQUE : on sauvegarde le contexte
     // des qu'une fonction ou un bout de code le modifie
@@ -58,4 +59,14 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export { drawCircleImmediat, drawGrid, getRandomInt };
+async function loadAssets()
+{
+    await loadImage('../assets/images/coeur_plein.png');
+    await loadImage('../assets/images/coeur_vide.png');
+    await loadImage('../assets/images/exit.gif')
+    await loadImage('../assets/images/meteor.png');
+    await loadImage('../assets/images/mur.png');
+    await loadImage('../assets/images/sprite.png');
+}
+
+export { drawCircleImmediat, drawGrid, getRandomInt, loadAssets };
