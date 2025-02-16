@@ -4,7 +4,7 @@ export default class ExitPortal extends ObjectGraphique {
     constructor(x, y, w, h, couleur) {
         super(x, y, w, h, couleur);
         this.sprite = new Image();
-        this.sprite.src = '/assets/images/exit.gif';
+        this.sprite.src = '/assets/images/exit.png';
     }
 
     draw(ctx) {
